@@ -1,9 +1,11 @@
 public class Location {
 
+    // Status constants
     public static final int UNGUESSED = 0;
     public static final int HIT = 1;
     public static final int MISSED = 2;
 
+    // Instance variables 
     private int status;
     private boolean hasShip;    
 
