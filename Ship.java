@@ -81,4 +81,5 @@ public class Ship {
              + "Length: " + this.getLength() + "\n"
              + "Direction: " + this.directionToString() + "\n";
     }
+
 }
