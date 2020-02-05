@@ -147,4 +147,22 @@ public class Grid {
         }
     }
 
+    /**
+     * This method can be called on your own grid. To add a ship
+     * we will go to the ships location and mark a true value
+     * in every location that the ship takes up.
+     */
+    public void addShip(Ship s) {
+        if(s.getDirection() == Ship.HORIZONTAL) {
+            for(int i = 0; i < s.getLength(); i++) {
+                setShip(s.getRow(), s.getCol() + i, true);
+            }
+        }
+        else if(s.getDirection() == Ship.VERTICAL) {
+            for(int i = 0; i < s.getLength(); i++) {
+                setShip(s.getRow() + 1, s.getCol(), true);
+            }
+        }
+    }
+
 }
