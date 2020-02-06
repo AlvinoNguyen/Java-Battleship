@@ -160,7 +160,7 @@ public class Grid {
         }
         else if(s.getDirection() == Ship.VERTICAL) {
             for(int i = 0; i < s.getLength(); i++) {
-                setShip(s.getRow() + 1, s.getCol(), true);
+                setShip(s.getRow() + i, s.getCol(), true);
             }
         }
     }
