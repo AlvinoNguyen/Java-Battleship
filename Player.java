@@ -7,15 +7,17 @@ public class Player {
     private Ship[] ships;
     private Grid playersGrid;
     private Grid opponentsGrid;
+    private boolean isComputer;
 
     // Player constructor
-    public Player() {
+    public Player(boolean isComputer) {
         ships = new Ship[5];
         for(int i = 0; i < SHIP_LENGTHS.length; i++) {
             ships[i] = new Ship(SHIP_LENGTHS[i]);
         }
         playersGrid = new Grid();
         opponentsGrid = new Grid();
+        this.isComputer = isComputer;
     }
 
     // Sets a ship’s row, column and direction
@@ -52,6 +54,10 @@ public class Player {
     // Returns the opponent's grid
     public Grid getOpponentsGrid() {
         return opponentsGrid;
+    }
+
+    public boolean isComputer() {
+        return isComputer;
     }
 
 }
