@@ -20,10 +20,10 @@ public class Player {
 
     // Sets a ship’s row, column and direction
     // and adds it to the current player’s grid
-    public void chooseShipLocation(Ship s, int row, int col, int direction) {
+    public boolean chooseShipLocation(Ship s, int row, int col, int direction) {
         s.setLocation(row, col);
         s.setDirection(direction);
-        playersGrid.addShip(s);
+        return playersGrid.addShip(s);
     }
 
     // Takes in an opponent guess for a row, col location,

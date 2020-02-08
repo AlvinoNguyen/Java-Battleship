@@ -4,6 +4,10 @@ public class Grid {
     public static final int NUM_ROWS = 10;
     public static final int NUM_COLS = 10;
 
+    // Constants for grid print type
+    public static final int PRINT_STATUS = 0;
+    public static final int PRINT_SHIPS = 1;
+
     // Instance variable
     private Location[][] grid;
 
@@ -44,9 +48,15 @@ public class Grid {
         return !grid[row][col].isUnguessed();
     }
 
-    // Set whether or not there is a ship at this location to the val   
-    public void setShip(int row, int col, boolean val) {
-        grid[row][col].setShip(val);
+    // Set whether or not there is a ship at this location to the val
+    // Returns false if the location is out of bounds and true otherwise   
+    public boolean setShip(int row, int col, boolean val) {
+        if(row < 0 || row >= numRows() || col < 0 || col >= numCols() || hasShip(row, col)) {
+            return false;
+        } else {
+            grid[row][col].setShip(val);
+            return true;
+        }
     }
 
     // Return whether or not there is a ship here   
@@ -152,17 +162,28 @@ public class Grid {
      * we will go to the ships location and mark a true value
      * in every location that the ship takes up.
      */
-    public void addShip(Ship s) {
+    public boolean addShip(Ship s) {
         if(s.getDirection() == Ship.HORIZONTAL) {
+            for(int i = 0; i < s.getLength(); i++) {
+                if(!setShip(s.getRow(), s.getCol() + i, false)) {
+                    return false;
+                }
+            }
             for(int i = 0; i < s.getLength(); i++) {
                 setShip(s.getRow(), s.getCol() + i, true);
             }
         }
         else if(s.getDirection() == Ship.VERTICAL) {
             for(int i = 0; i < s.getLength(); i++) {
+                if(!setShip(s.getRow() + i, s.getCol(), false)) {
+                    return false;
+                }
+            }
+            for(int i = 0; i < s.getLength(); i++) {
                 setShip(s.getRow() + i, s.getCol(), true);
             }
         }
+        return true;
     }
 
 }
