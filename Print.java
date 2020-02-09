@@ -11,6 +11,6 @@ public class Print {
     public static String readLine(String prompt) {
         System.out.print(prompt + " ");
         Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 }

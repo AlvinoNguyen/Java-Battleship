@@ -13,16 +13,25 @@ public class Battleship {
         placeShips(computer);
         Print.readLine("Hit enter to start guessing.");
 
-        askForGuess(computer, player);
-        /* int turnCount = 1;
-        while(false) {
+        int turnCount = 1;
+        int playerHits = 0;
+        int computerHits = 0;
+        while(playerHits < 17 && computerHits < 17) {
             if(turnCount % 2 == 0) {
-                // Computer's turn
+                if(askForGuess(computer, player)) {
+                    computerHits++;
+                }
+                player.getPlayersGrid().printStatus();
+                System.out.println("Total Hits = " + computerHits + " out of " + 17);
             } else {
-                // Player's turn
+                if(askForGuess(player, computer)) {
+                    playerHits++;
+                }
+                computer.getPlayersGrid().printStatus();
+                System.out.println("Total Hits = " + playerHits + " out of " + 17);
             }
             turnCount++;
-        } */
+        }
     }
 
     private static void printIntroduction() {
@@ -39,6 +48,55 @@ public class Battleship {
             grid.printStatus();
         } else {
             grid.printShips();
+        }
+    }
+
+    private static int getRow() {
+        while(true) {
+            String rowString = Print.readLine("Which row? (A-J)").toUpperCase();
+            if(rowString.equals("")) {
+                continue;
+            }
+            int row = rowString.charAt(0) - 'A';
+            if(row < 0 || row > 9) {
+                System.out.println("Invalid row, please try again.");
+            } else {
+                return row;
+            }
+        }
+    }
+
+    private static int getCol() {
+        while(true) {
+            String colString = Print.readLine("Which column? (1-10)");
+            if(colString.equals("")) {
+                continue;
+            }
+            try {
+                int col = Integer.parseInt(colString) - 1;
+                if(col < 0 || col > 9) {
+                    System.out.println("Invalid column, please try again.");
+                } else {
+                    return col;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid column, please try again.");
+            }
+        }
+    }
+
+    private static int getDirection() {
+        while(true) {
+            String directionString = Print.readLine("Horizontal or vertical?");
+            if(directionString.equals("")) {
+                continue;
+            } else if(directionString.toUpperCase().charAt(0) == 'H') {
+                return Ship.HORIZONTAL;
+            } else if (directionString.toUpperCase().charAt(0) == 'V') {
+                return Ship.VERTICAL;
+            } else {
+                System.out.println("Invalid direction, please try again.");
+            }
         }
     }
 
@@ -66,39 +124,10 @@ public class Battleship {
                 System.out.println("Now you need to place a ship of length " + cur.getLength());
                 while(true) {
 
-                    int row;
-                    while(true) {
-                        row = Print.readLine("Which row? (A-J)").toUpperCase().charAt(0) - 'A';
-                        if(row < 0 || row > 9) {
-                            System.out.println("Invalid row, please try again.");
-                        } else {
-                            break;
-                        }
-                    }
+                    int row = getRow();
+                    int col = getCol();
 
-                    int col;
-                    while(true) {
-                        col = Integer.parseInt(Print.readLine("Which column? (1-10)")) - 1;
-                        if(col < 0 || col > 9) {
-                            System.out.println("Invalid column, please try again.");
-                        } else {
-                            break;
-                        }
-                    }
-
-                    int direction;
-                    while(true) {
-                        String direction_str = Print.readLine("Horizontal or vertical?");
-                        if(direction_str.toUpperCase().charAt(0) == 'H') {
-                            direction = Ship.HORIZONTAL;
-                            break;
-                        } else if (direction_str.toUpperCase().charAt(0) == 'V') {
-                            direction = Ship.VERTICAL;
-                            break;
-                        } else {
-                            System.out.println("Invalid direction, please try again.");
-                        }
-                    }
+                    int direction = getDirection();
 
                     if(player.chooseShipLocation(cur, row, col, direction)) {
                         break;
@@ -126,11 +155,27 @@ public class Battleship {
             System.out.println("Computer player guesses row " + ((char)(row + 'A')) + " and column " + (col + 1));
             if(enemy.recordOpponentGuess(row, col)) {
                 System.out.println("Computer hit!");
+                return true;
             } else {
                 System.out.println("Computer missed.");
+                return false;
             }
-            enemy.getPlayersGrid().printStatus();
+        } else {
+            Print.readLine("Hit enter for your turn.");
+            Print.clearScreen();
+            displayGrid("Enemy grid", enemy.getPlayersGrid(), Grid.PRINT_STATUS);
+            System.out.println("It's your turn to guess.");
+            int row = getRow();
+            int col = getCol();
+            Print.clearScreen();
+            if(enemy.recordOpponentGuess(row, col)) {
+                System.out.println("You got a hit!");
+                return true;
+            } else {
+                System.out.println("Nope, that was a miss.");
+                return false;
+            }
         }
-        return true;
+        
     }
 }
