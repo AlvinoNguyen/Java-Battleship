@@ -9,6 +9,7 @@ public class Ship {
     private int row;
     private int col;
     private int length;
+    private int health;
     private int direction;
 
     // Constructor. Create a ship and set the length.
@@ -16,6 +17,7 @@ public class Ship {
         this.row = UNSET;
         this.col = UNSET;
         this.length = length;
+        this.health = length;
         this.direction = UNSET;
     }
 
@@ -40,6 +42,11 @@ public class Ship {
         this.direction = direction;
     }
 
+    // Decrement the health of the ship
+    public void decrementHealth() {
+        this.health--;
+    }
+
     // Getter for the row value
     public int getRow() {
         return this.row;
@@ -58,6 +65,11 @@ public class Ship {
     // Getter for the direction
     public int getDirection() {
         return this.direction;
+    }
+
+    // Getter for the health
+    public int getHealth() {
+        return this.health;
     }
 
     // Helper method to get a string value from the direction

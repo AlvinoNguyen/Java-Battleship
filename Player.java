@@ -37,6 +37,12 @@ public class Player {
         }
         else if(playersGrid.hasShip(row, col)) {
             playersGrid.markHit(row, col);
+            Ship ship = playersGrid.get(row, col).getShip();
+            ship.decrementHealth();
+            if(ship.getHealth() == 0) {
+                System.out.println("SHIP SUNK!");
+                ship.decrementHealth();
+            }
             return true;
         } else {
             playersGrid.markMiss(row, col);

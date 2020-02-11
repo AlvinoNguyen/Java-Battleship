@@ -50,11 +50,11 @@ public class Grid {
 
     // Set whether or not there is a ship at this location to the val
     // Returns false if the location is out of bounds and true otherwise   
-    public boolean setShip(int row, int col, boolean val) {
+    public boolean setShip(int row, int col, Ship ship) {
         if(row < 0 || row >= numRows() || col < 0 || col >= numCols() || hasShip(row, col)) {
             return false;
         } else {
-            grid[row][col].setShip(val);
+            grid[row][col].setShip(ship);
             return true;
         }
     }
@@ -165,22 +165,22 @@ public class Grid {
     public boolean addShip(Ship s) {
         if(s.getDirection() == Ship.HORIZONTAL) {
             for(int i = 0; i < s.getLength(); i++) {
-                if(!setShip(s.getRow(), s.getCol() + i, false)) {
+                if(!setShip(s.getRow(), s.getCol() + i, null)) {
                     return false;
                 }
             }
             for(int i = 0; i < s.getLength(); i++) {
-                setShip(s.getRow(), s.getCol() + i, true);
+                setShip(s.getRow(), s.getCol() + i, s);
             }
         }
         else if(s.getDirection() == Ship.VERTICAL) {
             for(int i = 0; i < s.getLength(); i++) {
-                if(!setShip(s.getRow() + i, s.getCol(), false)) {
+                if(!setShip(s.getRow() + i, s.getCol(), null)) {
                     return false;
                 }
             }
             for(int i = 0; i < s.getLength(); i++) {
-                setShip(s.getRow() + i, s.getCol(), true);
+                setShip(s.getRow() + i, s.getCol(), s);
             }
         }
         return true;

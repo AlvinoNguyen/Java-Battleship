@@ -7,12 +7,12 @@ public class Location {
 
     // Instance variables 
     private int status;
-    private boolean hasShip;    
+    private Ship ship;
 
     // Location constructor. 
     public Location() {
         this.status = UNGUESSED;
-        this.hasShip = false;
+        this.ship = null;
     }
 
     // Was this Location a hit?
@@ -42,12 +42,16 @@ public class Location {
 
     // Return whether or not this location has a ship.
     public boolean hasShip() {
-        return this.hasShip;
+        return this.ship != null;
     }
 
     // Set the value of whether this location has a ship.
-    public void setShip(boolean val) {
-        this.hasShip = val;
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+
+    public Ship getShip() {
+        return this.ship;
     }
 
     // Set the status of this Location.
