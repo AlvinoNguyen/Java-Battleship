@@ -32,7 +32,10 @@ public class Player {
     // and records the guess, and returns a boolean indicating
     // whether the guess was a hit
     public boolean recordOpponentGuess(int row, int col) {
-        if(playersGrid.hasShip(row, col)) {
+        if(playersGrid.alreadyGuessed(row, col)) {
+            return false;
+        }
+        else if(playersGrid.hasShip(row, col)) {
             playersGrid.markHit(row, col);
             return true;
         } else {

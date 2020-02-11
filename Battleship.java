@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Battleship {
     public static void main(String[] args) {
         Player player = new Player(false);
@@ -31,6 +29,11 @@ public class Battleship {
                 System.out.println("Total Hits = " + playerHits + " out of " + 17);
             }
             turnCount++;
+        }
+        if(playerHits == 17) {
+            System.out.println("You win!");
+        } else {
+            System.out.println("The computer wins!");
         }
     }
 
